@@ -68,3 +68,5 @@ for installing the above packages you have to run the below command
     $ yarn start
 
 ## Simple build for production
+
+    $ yarn build
