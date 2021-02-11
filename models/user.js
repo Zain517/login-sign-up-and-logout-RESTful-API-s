@@ -26,12 +26,12 @@ const userSchema=mongoose.Schema({
         required: true,
         minlength:8
     },
-    password2:{
-        type:String,
-        required: true,
-        minlength:8
+    // password2:{
+    //     type:String,
+    //     required: true,
+    //     minlength:8
 
-    },
+    // },
     token:{
         type: String
     }

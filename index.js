@@ -1,6 +1,6 @@
 const express=require('express');
 const mongoose= require('mongoose');
-const bodyparser=require('body-parser');
+// const bodyparser=require('body-parser');
 const cookieParser=require('cookie-parser');
 const User=require('./models/user');
 const {auth} =require('./middlewares/auth');
@@ -9,8 +9,8 @@ const db=require('./config/config').get(process.env.NODE_ENV);
 
 const app=express();
 // app use
-app.use(bodyparser.urlencoded({extended : false}));
-app.use(bodyparser.json());
+// app.use(bodyparser.urlencoded({extended : false}));
+app.use(express.json());
 app.use(cookieParser());
 
 // database connection
@@ -31,7 +31,7 @@ app.post('/api/register',function(req,res){
     if(newuser.password!=newuser.password2)return res.status(400).json({message: "password not match"});
     
     User.findOne({email:newuser.email},function(err,user){
-        if(user) return res.status(400).json({ auth : false, message :"email exits"});
+        if(user) return res.status(400).json({ status: "400", auth : false, message :"email exits"});
  
         newuser.save((err,doc)=>{
             if(err) {console.log(err);
@@ -57,10 +57,10 @@ app.post('/api/register',function(req,res){
      
          else{
              User.findOne({'email':req.body.email},function(err,user){
-                 if(!user) return res.json({isAuth : false, message : ' Auth failed ,email not found'});
+                 if(!user) return res.status(400).json({status: "400", isAuth : false, message : ' Auth failed ,email not found'});
          
                  user.comparepassword(req.body.password,(err,isMatch)=>{
-                     if(!isMatch) return res.json({ isAuth : false,message : "password doesn't match"});
+                     if(!isMatch) return res.status(400).json({ status: "400", isAuth : false,message : "password doesn't match"});
          
                  user.generateToken((err,user)=>{
                      if(err) return res.status(400).send(err);
