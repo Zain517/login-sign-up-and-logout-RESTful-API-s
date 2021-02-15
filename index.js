@@ -91,6 +91,7 @@ app.post('/api/register',function(req,res){
  // get logged in user
  app.get('/api/profile',auth,function(req,res){
          res.json({
+             status: "200",
              isAuth: true,
              id: req.user._id,
              email: req.user.email,
