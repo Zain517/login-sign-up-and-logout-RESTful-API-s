@@ -52,6 +52,7 @@ app.post('/api/register',function(req,res){
      User.findByToken(token,(err,user)=>{
          if(err) return  res(err);
          if(user) return res.status(400).json({
+             status: "400",
              error :true,
              message:"You are already logged in"
          });
@@ -66,6 +67,7 @@ app.post('/api/register',function(req,res){
                  user.generateToken((err,user)=>{
                      if(err) return res.status(400).send(err);
                      res.cookie('auth',user.token).json({
+                         status: "200",
                          isAuth : true,
                          id : user._id
                          ,email : user.email
