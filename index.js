@@ -100,7 +100,25 @@ app.post('/api/register',function(req,res){
          })
  });
  
+ // Deleting User from DB
+app.post('/api/delete',function(req,res){
+   
+    const newuser=new User(req.body);
+     
+    User.findOne({email:newuser.email},function(err,user){
+        if(!user) return res.status(400).json({ status: "400", auth : false, message :"User not exits"});
  
+        User.deleteOne({ email: { $eq: newuser.email } }).then(function(){ 
+            res.status(200).json({
+                status: "200",
+                succes:true,
+            }); // Success 
+        }).catch(function(error){ 
+            console.log(error); 
+            return res.status(400).json({  status: "400", success : false}); // Failure 
+        }); 
+    });
+ });
 
 
 
