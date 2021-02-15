@@ -28,7 +28,7 @@ app.post('/api/register',function(req,res){
     const newuser=new User(req.body);
     console.log(newuser);
  
-    if(newuser.password!=newuser.password2)return res.status(400).json({message: "password not match"});
+    // if(newuser.password!=newuser.password2)return res.status(400).json({message: "password not match"});
     
     User.findOne({email:newuser.email},function(err,user){
         if(user) return res.status(400).json({ status: "400", auth : false, message :"email exits"});
@@ -37,6 +37,7 @@ app.post('/api/register',function(req,res){
             if(err) {console.log(err);
                 return res.status(400).json({ success : false});}
             res.status(200).json({
+                status: "200",
                 succes:true,
                 user : doc
             });
